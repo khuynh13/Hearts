@@ -1,0 +1,67 @@
+
+.cards_pane{
+    /* display: -webkit-flex;
+    display: flex; */
+    margin: auto;
+    width: auto;
+    /* border: 3px solid green; */
+    padding: 10px;
+}
+
+.pane {
+    /* border: thick solid black;     */
+    display: -webkit-flex;
+    display: flex;
+    margin: auto;
+    width: auto;
+    padding: 5px;
+    min-height: 200px;
+    overflow: hidden;
+    background-color: lightgrey;
+}
+
+.flex-item {
+    /* background-color: green; */
+    width: 350px;
+    /* height: 350px; */
+    height: auto;
+    margin: auto;
+}
+
+#table {
+    height: auto;
+    width: auto;
+}
+
+#table-container {
+    height: 100%;
+    width: 100%;
+    align-content: center;
+}
+
+p {
+    color: black;
+}
+
+.cardSelected {
+    outline-color: blue;
+    outline-style: solid;
+    outline-width: 2px;
+}
+
+.cards {
+    padding: 3px;
+}
+
+.cardPlayable {
+    outline-color: red;
+    outline-style: solid;
+    outline-width: 2px;
+}
+
+
+/* body {
+    background-color: rgb(2, 66, 29);
+} */
+
+

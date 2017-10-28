@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Hearts</title>
+        <script src="jquery-3.2.1.js"></script>
+        <script src="Card.js"></script>
+        <script src="Hearts.js"></script>
+        <script src="HeartsMatch.js"></script>
+        <script src="DumbAI.js"></script>
+        <script src="Player.js"></script>
+        <script src="Main.js"></script>
+        <link rel="stylesheet" type="text/css" href="hearts.css">
+    </head>
+    <body>
+        <div id="top_pane" class="pane">
+            <p>north player here</p>
+            <div id="north-player" class="cards_pane">
+                <!-- <p>insert cards here</p> -->
+            </div>
+        </div>
+        <div id="mid_pane" class="pane">
+            <div id="west-player" class="flex-item">
+                <p>player west here</p>
+            </div>
+            <div id="table" class="flex-item">
+                <!-- <p>insert cards here</p> -->
+                <div id="table-container">           
+                    <img src="table.png" alt="table">
+                </div>
+            </div>
+            <div id="east-player" class="flex-item">
+                <p>east player here</p>
+            </div>
+        </div>
+        <div id="bottom_pane" class="pane">
+            <p>south player here</p>
+            <div id="player" class="pane">
+ 
+            </div>
+        </div>
+        <div id="button-panel">
+            <button type="button" id="play-game">Start Game!</button>
+            <button type="button" id="show-dealt">Show My Cards!</button>
+            <button type="button" id="pass">Pass Cards</button>
+            <button type="button" id="play-card">Play Card</button>
+        </div>
+    </body>
+
+</html>
