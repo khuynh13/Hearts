@@ -4,6 +4,9 @@ var Player = function(name, uiDiv) {
     var position = null
     var currentGame = null
     var playerKey = null
+    var cardPlayed = null
+
+    var hasPassed = false;
 
     this.getName = function() {
         return name
@@ -29,9 +32,11 @@ var Player = function(name, uiDiv) {
             } else {
                 console.log(e.getStartPos())
             }
+
+            // console.log(currentGame.getScore(position))
         })
 
-        var cardPlayed;
+        // var cardPlayed;
         game.registerEventHandler(Hearts.CARD_PLAYED_EVENT, function(e) {
             console.log("card is played")
             console.log(e.getCard().toString())
@@ -39,52 +44,18 @@ var Player = function(name, uiDiv) {
         })
 
         game.registerEventHandler(Hearts.TRICK_CONTINUE_EVENT, function(e) {
-            // cardPlayed = cardPlayed.toString();
-            // console.log("inside trick continue")
             if (e.getNextPos() === position) {
-                console.log("is my position")
-                // $("button#play-card").bind('click', showHand)
-                // console.log("is my position")
-                // for (i = 0; i < currentGame.getHand(playerKey).getUnplayedCards(playerKey).length; i++) {
-                //     console.log("inside for looping hand")
-                //     var currentCard = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i].toString().split(" ")[2]
-                //     var imgSrc = $("#player").find("img").attr('src').split("/")[1].split("_")[2].split(".")[0]
-                //     imgSrc = imgSrc.charAt(0).toUpperCase() + imgSrc.slice(1)
-                    
-                //     // console.log(currentCard)
-                //     // console.log(currentCard.toString())
-                //     // console.log(currentCard)
-                //     if (currentCard === imgSrc) {
-                //         console.log("matching suit found")
-                //         console.log(currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS)
-
-                //         // $(".cards").bind('click', showHand)
-
-                // $(".cards").bind('click', showHand)
-                showHand()
-
-                //         // $("#player").eq(i).addClass("cardPlayable")
-                //         // console.log("matching suit")
-                //         // console.log($("#player").find("img").attr('src'))
-                //         // var imgSrc = $("#player").find("img").attr('src').split("/")[1].split("_")[2].split(".")[0]
-                //         // console.log(imgSrc)
-                //         // imgSrc = imgSrc.charAt(0).toUpperCase() + imgSrc.slice(1)
-                //         // console.log(imgSrc)
-                //         // var validCard = currentCard.toString().split(" ")[0] // grab the appropriate suit
-                //         // $("#player").children().css({"outline-color:": "red"})
-                //         // $(".cards").bind('click', function(e) {
-                //         //     console.log('playable card clicked')
-                //         //     $(this).addClass("cardPlayable")
-                //         // })
-
-                //     }
-                // }
+                refreshHand()
+                console.log(currentGame.getHand(playerKey).getUnplayedCards(playerKey).length)
+                showPlayable()
             }
         })
 
     } 
 
-
+    var getLastPlayedCard = function() {
+        return cardPlayed
+    }
 
     var cardDict = {
         "Two of Clubs": "2_of_clubs",
@@ -149,54 +120,151 @@ var Player = function(name, uiDiv) {
 
     var handlePassing = function(e) {
         if (currentGame.getStatus() === Hearts.PASSING) {
-            if ($(this).hasClass("cardSelected")) { // unselect
-                $(this).removeClass("cardSelected")
-                cardsPassed.pop() // remove last card from clicked
-            } else if ($(".cardSelected").length === 3) { // 3 already selected, replace last selected with new selected
-                $(".cardSelected").last().removeClass("cardSelected")
-                $(this).addClass("cardSelected")
-                for (i = 0; i < 13; i++) {
-                    var cardSelected = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i]
-                    if (e.target.id === cardSelected.toString().replace(/\s/g, "_")) {
-                        cardsPassed[cardsPassed.length - 1] = cardSelected
-                    } 
-                }
-            } else { // select
-                $(this).addClass("cardSelected")
-                for (i = 0; i < 13; i++) {
-                    var cardSelected = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i]
-                    try {
-                        if (e.target.id === cardSelected.toString().replace(/\s/g, "_")) {
-                            cardsPassed.push(cardSelected)
-                        } 
-                    } catch(error) {
-
-                    }
-
-                }                
+            if ($(".cardSelected").length < 3 || $(this).hasClass('cardSelected')) {
+                $(this).toggleClass('cardSelected')
             }
-        } else if (false) {
-            // something
+            // var temp = $(this)
+
+            // if (cardsPassed.length === 3) {
+
+            // }
+            // if ($(this).hasClass("cardSelected")) { // deselect
+            //     cardsPassed.pop()
+            // } else {
+            //     cards.passed.push($(this))
+            // }
+
+
+            // $(this).toggleClass("cardSelected")
+
+            // $(this).toggleClass('cardSelected', !($(this).hasClass('cardSelected') && $('cardSelected').length <= 3));
         }
+
+        //     if ($(this).hasClass("cardSelected")) { // deselect
+        //         var index;
+        //         for (i = 0; i < cardsPassed.length; i++) {
+        //             if (cardsPassed[i] === $(this)) {
+        //                 index = i;
+        //             }
+        //         }
+        //         cardsPassed.splice(index, 1)
+        //         $(this).removeClass("cardSelected")
+        //         // cardsPassed.pop() // remove last card from clicked
+        //         console.log(cardsPassed.length)
+        //     } else if ($(".cardSelected").length === 3) { // 3 already selected, replace last selected with new selected
+        //         $(".cardSelected").last().removeClass("cardSelected")
+        //         cardsPassed.pop()
+        //         $(this).addClass("cardSelected")
+        //         console.log($(this))
+        //         for (i = 0; i < 13; i++) {
+        //             var cardSelected = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i]
+        //             if (e.target.id === cardSelected.toString().replace(/\s/g, "_")) {
+        //                 cardsPassed.push(cardSelected)
+        //             } 
+        //         }
+        //         console.log(cardsPassed.length)                
+                
+        //     } else { // select
+        //         $(this).addClass("cardSelected")
+        //         console.log($(this))
+                              
+        //         for (i = 0; i < 13; i++) {
+        //             var cardSelected = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i]
+        //             try {
+        //                 if (e.target.id === cardSelected.toString().replace(/\s/g, "_")) {
+        //                     cardsPassed.push(cardSelected)
+        //                 } 
+        //             } catch(error) {
+
+        //             }
+
+
+        //         }    
+        //         console.log(cardsPassed.length)              
+        //     }
+        // } else if (false) {
+        //     // something
+        // }
+
     }
 
 
+    // var cardToPlay
+    var cardToPlayStack = []
     var handlePlaying = function(e) {
-        console.log("inside handle play function")
-        alert("handle play")
+        // if (currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS) {
+            // refreshHand()
+            // console.log("handling playing")
+            // for (i = 0; i < currentGame.getHand(playerKey).getUnplayedCards(playerKey).length; i++) {
+            //     var currentSuit = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i].toString().split(" ")
+            //     // console.log(currentSuit[2])
+            //     var imgSrcSuit = $("#player").find("img").attr('src').split("/")[1].split("_")[2].split(".")[0]
+            //     imgSrcSuit = imgSrcSuit.charAt(0).toUpperCase() + imgSrcSuit.slice(1)
+            //     console.log(imgSrcSuit)
+
+            //     if (imgSrcSuit === currentSuit) {
+            //         console.log("same suit")
+            //         $(".cards").addClass("cardPlayable")
+            //     }
+            // }
+
+            // var currentSuit = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i].toString().split(" ")
+            // var imgSrcSuit = $("#player").find("img").attr('src').split("/")[1].split("_")[2].split(".")[0]
+            // imgSrcSuit = imgSrcSuit.charAt(0).toUpperCase() + imgSrcSuit.slice(1)
+
+        //     if ($(e.target).hasClass("cards")) {
+        //         console.log($(e.target).attr('src'))
+        //         var currentImgSrcSuit = $(e.target).attr('src').split("/")[1].split("_")[2].split(".")[0]
+        //         currentImgSrcSuit = currentImgSrcSuit.charAt(0).toUpperCase() + currentImgSrcSuit.slice(1)
+        //         console.log(currentImgSrcSuit)
+        //         var suitPlayed = getLastPlayedCard().toString().split(" ")[2]
+        //         console.log(suitPlayed)
+                
+        //         if (currentImgSrcSuit === suitPlayed) {
+        //             $(e.target).addClass("cardPlayable")
+        //         } else {
+        //             alert("You must play a card of suit " + suitPlayed)
+        //         }
+
+        //     }
+        // }
+        if (cardToPlayStack.length !== 0) {
+            cardToPlayStack.pop()
+            $(".cardToPlay").removeClass("cardToPlay")
+        } else {
+            $(this).addClass("cardToPlay")
+            cardToPlayStack.push($(this))
+            // cardToPlay = $(this)
+            console.log($(e.target).attr("src"))        
+            // cardToPlay = e.target.id
+            // console.log(cardToPlay)
+        }
+
+        console.log(cardToPlayStack.length)
+
+
+    }
+
+    var showPlayable = function() {
+        console.log("showPlayable")
+        //refreshHand()
         if (currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS) {
-            console.log("handling playing")
-            for (i = 0; i < currentGame.getHand(playerKey).getUnplayedCards(playerKey).length; i++) {
-                var currentSuit = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i].toString().split(" ")
-                console.log(currentSuit[2])
-                // console.log(e.target.id.split("_")[2])
-                console.log(currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i].toString().split(" "))
-                console.log(e.target.id.split("_"))
-                if (e.target.id.split("_")[2] === currentSuit) {
-                    console.log("same suit")
-                    $(this).addClass("cardSelected")
+            $("#player").children(".cards").each(function() {
+                console.log("showPlayable2")
+                var currentImgSrcSuit = $(this).attr('src').split("/")[1].split("_")[2].split(".")[0]
+                currentImgSrcSuit = currentImgSrcSuit.charAt(0).toUpperCase() + currentImgSrcSuit.slice(1)
+                
+                if (currentImgSrcSuit === cardPlayed.toString().split(" ")[2]) {
+                    console.log("showPlayable3")
+                    // alert($(this))  
+                    // console.log($(this).attr("src"))      
+                    // console.log($(this).toggleClass("cardPlayable"))    
+                    $(this).addClass("cardPlayable")
+                    $(this).on('click', handlePlaying)    
                 }
-            }
+
+            })
+
         }
     }
 
@@ -222,78 +290,131 @@ var Player = function(name, uiDiv) {
         })
 
         if (currentGame.getStatus() === Hearts.PASSING) {
-            $(".cards").bind('click', handlePassing)
+            $(".cards").on('click', handlePassing)
+            cardsPassed = []
             $("button#show-dealt").hide()
-        } else if (currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS) {
-            $(".cards").bind('click', handlePlaying)
-            console.log("Trick in progres")
-        }
-
-        
-        
+        } 
+        // else if (currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS) {
+        //     alert("yo")
+        //     // $("body").on('click', '.cards', handlePlaying)
+        //     showPlayable()
+        //     console.log("Trick in progress")
+        // }     
     }
 
     $("button#show-dealt").on('click', showHand)
 
-
     var cardsPassed = []
 
     $("button#pass").on('click', function(e) {
+
+        // while ($(".cardSelected").length > 0) {
+            var allCardsSelected = $("#player").children(".cardSelected")
+            var currentHand = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
+
+            // console.log(allCardsSelected[0].id)
+            // console.log(allCardsSelected instanceof Array)
+            allCardsSelected.forEach(c => cardsPassed.push(c.id))
+
+       
+            console.log(cardsPassed)
+            
+            currentHand.forEach(function(c, i) {
+                if (c.toString().replace(/\s/g, "_") === cardsPassed[i]) {
+                    cardsPassed[i] = c
+                    i++
+                }
+            })
+
+            console.log(cardsPassed)
+            // console.log(allCardsSelected[0].attr('src'))
+        //}
         if (currentGame.getStatus() === Hearts.PASSING) {
             if (!currentGame.passCards(cardsPassed, playerKey)) {
-                alert("Please choose " + Math.abs((3 - cardsPassed.length)) + " more cards to pass!")
+                alert("Please choose 3 cards to pass!")
+                cardsPassed = []
                 handlePassing()
             } else {
+                console.log(cardsPassed.length)
+                $("#player").find((".cardSelected")).removeClass("cardSelected")
                 currentGame.passCards(cardsPassed, playerKey)
-                $("#player").empty()
-                var dealt = currentGame.getHand(playerKey).getUnplayedCards(playerKey);
-                dealt.forEach(function(c) {
-                    var displayedCards = $('img').map(function() { return this.src }).get()
-            
-                    for (card in displayedCards) {
-                        if (displayedCards[card].indexOf(cardDict[c.toString()]) !== -1) {
-                            return
-                        }
-            
-                    } 
-                    
-                    var img = $("<img class='cards' src=" + "PNG-cards-1.3/" + cardDict[c.toString()] + ".png" + " alt='card text' width= 70px height=95px>")
-        
-                    $("#player").append(img);
-                })
+                // refreshHand() // breaks showPlayable() but needed to actually pass
+                // refreshHand()
             }
 
-            if (cardsPassed.length === 3) {
-                $("button#pass").hide()
-                $("button#play-card").show()
-            }
         } 
+
+        if (cardsPassed.length === 3) {
+            cardsPassed = []
+            $("button#pass").hide()
+            $("button#play-card").show()
+        }
 
     })
 
-    var cardToPlay;
+    var refreshHand = function() {
+        console.log("refreshing hand")
+        $("#player").empty()
+        var dealt = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
+        dealt.forEach(function(c) {
+            var displayedCards = $('img').map(function() { return this.src }).get()
+    
+            for (card in displayedCards) {
+                if (displayedCards[card].indexOf(cardDict[c.toString()]) !== -1) {
+                    return
+                }
+    
+            } 
+            
+            var img = $("<img class='cards' src=" + "PNG-cards-1.3/" + cardDict[c.toString()] + ".png" + " alt='card text' width= 70px height=95px>")
+
+            $("#player").append(img)
+        })
+        
+    }
 
     $("button#play-card").on('click', function(e) {
-        if (currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS) {
-            currentGame.playCard(cardToPlay, playerKey)
-            $("#player").empty()
-            var dealt = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
-            
-            dealt.forEach(function(c) {
-                var displayedCards = $('img').map(function() { return this.src }).get()
+        // if (currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS) {
+        //     currentGame.playCard(cardToPlay, playerKey)
+        //     $("#player").empty()
+        //     var dealt = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
+
+        //     dealt.forEach(function(c) {
+        //         var displayedCards = $('img').map(function() { return this.src }).get()
         
-                for (card in displayedCards) {
-                    if (displayedCards[card].indexOf(cardDict[c.toString()]) !== -1) {
-                        return
-                    }
+        //         for (card in displayedCards) {
+        //             if (displayedCards[card].indexOf(cardDict[c.toString()]) !== -1) {
+        //                 return
+        //             }
         
-                } 
+        //         } 
                 
-                var img = $("<img class='cards' src=" + "PNG-cards-1.3/" + cardDict[c.toString()] + ".png" + " alt='card text' width= 70px height=95px>")
+        //         var img = $("<img class='cards' src=" + "PNG-cards-1.3/" + cardDict[c.toString()] + ".png" + " alt='card text' width= 70px height=95px>")
     
-                $("#player").append(img);
-            })
-        }
+        //         $("#player").append(img);
+        //     })
+        // }
+
+        var cardToPlay = cardToPlayStack.pop().attr("src").split("/")[1].split(".")[0]
+        console.log(cardToPlay) // 10_of_clubs
+        // cardToPlay = cardToPlay.pop()
+        cardToPlay = cardToPlay.split("_") // 10 of clubs
+
+        // cardToPlay = cardToPlay.toString().replace(/,/g, " ")
+
+        cardToPlay[0] = cardToPlay[0].charAt(0).toUpperCase() + cardToPlay[0].slice(1)
+        cardToPlay[2] = cardToPlay[2].charAt(0).toUpperCase() + cardToPlay[2].slice(1)
+        
+        console.log(cardToPlay[0])
+
+
+        console.log(cardToPlay)
+        // var suit = cardToPlay[2].charAt(0).toUpperCase()
+        // cardToPlay[2] = suit
+        // cardToPlay = cardToPlay.toString().replace(/,/g, " ")
+        // console.log(cardToPlay)
+
+        
     })
 
 

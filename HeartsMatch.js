@@ -63,7 +63,7 @@ var HeartsMatch = function (player_north, player_east, player_south, player_west
 	    // Match over.
 	    return;
 	}
-	setup_next_game();
+	setTimeout(function() {setup_next_game();}, 1500);
     }
 
     var setup_next_game = function (e) {

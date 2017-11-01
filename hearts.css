@@ -54,9 +54,18 @@ p {
 }
 
 .cardPlayable {
-    outline-color: red;
-    outline-style: solid;
-    outline-width: 2px;
+    outline-color: red!important;
+    outline-style: solid!important;
+    outline-width: 2px!important;
+}
+
+.cardToPlay {
+    background-color: yellow;
+    box-shadow: 0px 12px 22px 1px #333;
+}
+
+.test {
+    height: 50px;
 }
 
 
