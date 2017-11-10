@@ -312,10 +312,9 @@ var Player = function(name, uiDiv) {
             var allCardsSelected = $("#player").children(".cardSelected")
             var currentHand = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
 
-            // console.log(allCardsSelected[0].id)
+            console.log(allCardsSelected[0].id)
             // console.log(allCardsSelected instanceof Array)
-            allCardsSelected.forEach(c => cardsPassed.push(c.id))
-
+            // allCardsSelected.forEach(c => console.log(c.id))
        
             console.log(cardsPassed)
             
