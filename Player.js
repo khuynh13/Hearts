@@ -122,69 +122,15 @@ var Player = function(name, uiDiv) {
         if (currentGame.getStatus() === Hearts.PASSING) {
             if ($(".cardSelected").length < 3 || $(this).hasClass('cardSelected')) {
                 $(this).toggleClass('cardSelected')
+            } else {
+                // currentGame.passCards(cardsPassed, playerKey)
             }
             // var temp = $(this)
 
             // if (cardsPassed.length === 3) {
 
-            // }
-            // if ($(this).hasClass("cardSelected")) { // deselect
-            //     cardsPassed.pop()
-            // } else {
-            //     cards.passed.push($(this))
-            // }
-
-
-            // $(this).toggleClass("cardSelected")
-
-            // $(this).toggleClass('cardSelected', !($(this).hasClass('cardSelected') && $('cardSelected').length <= 3));
         }
 
-        //     if ($(this).hasClass("cardSelected")) { // deselect
-        //         var index;
-        //         for (i = 0; i < cardsPassed.length; i++) {
-        //             if (cardsPassed[i] === $(this)) {
-        //                 index = i;
-        //             }
-        //         }
-        //         cardsPassed.splice(index, 1)
-        //         $(this).removeClass("cardSelected")
-        //         // cardsPassed.pop() // remove last card from clicked
-        //         console.log(cardsPassed.length)
-        //     } else if ($(".cardSelected").length === 3) { // 3 already selected, replace last selected with new selected
-        //         $(".cardSelected").last().removeClass("cardSelected")
-        //         cardsPassed.pop()
-        //         $(this).addClass("cardSelected")
-        //         console.log($(this))
-        //         for (i = 0; i < 13; i++) {
-        //             var cardSelected = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i]
-        //             if (e.target.id === cardSelected.toString().replace(/\s/g, "_")) {
-        //                 cardsPassed.push(cardSelected)
-        //             } 
-        //         }
-        //         console.log(cardsPassed.length)                
-                
-        //     } else { // select
-        //         $(this).addClass("cardSelected")
-        //         console.log($(this))
-                              
-        //         for (i = 0; i < 13; i++) {
-        //             var cardSelected = currentGame.getHand(playerKey).getUnplayedCards(playerKey)[i]
-        //             try {
-        //                 if (e.target.id === cardSelected.toString().replace(/\s/g, "_")) {
-        //                     cardsPassed.push(cardSelected)
-        //                 } 
-        //             } catch(error) {
-
-        //             }
-
-
-        //         }    
-        //         console.log(cardsPassed.length)              
-        //     }
-        // } else if (false) {
-        //     // something
-        // }
 
     }
 
@@ -304,36 +250,38 @@ var Player = function(name, uiDiv) {
 
     $("button#show-dealt").on('click', showHand)
 
-    var cardsPassed = []
 
     $("button#pass").on('click', function(e) {
+        var cardsPassed = []
+        var selected = []
 
-        // while ($(".cardSelected").length > 0) {
-            var allCardsSelected = $("#player").children(".cardSelected")
-            var currentHand = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
+        // var allCardsSelected = $("#player").children(".cardSelected")
+        var currentHand = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
 
-            Array.from($(".cardSelected")).forEach(c => cardsPassed.push(c.id.replace(/_/g, " ")))
+        // currentHand.forEach(c => c = c.toString())
 
-       
-            console.log(cardsPassed)
-            
-            currentHand.forEach(function(c, i) {
-                if (c.toString().replace(/\s/g, "_") === cardsPassed[i]) {
-                    cardsPassed[i] = c
-                    i++
+        Array.from($(".cardSelected")).forEach(c => selected.push(c.id.replace(/_/g, " ")))
+        
+        for (var i = 0; i < currentHand.length; i++) {
+            for (var j = 0; j < selected.length; j++) {
+                if (currentHand[i].toString() === selected[j]) {
+                    cardsPassed.push(currentHand[i])
                 }
-            })
+            }
+            
+        }
 
-            console.log(cardsPassed)
-            // console.log(allCardsSelected[0].attr('src'))
-        //}
+        // cardsPassed = $(".cardSelected").toArray()
+        console.log(cardsPassed)
+
         if (currentGame.getStatus() === Hearts.PASSING) {
             if (!currentGame.passCards(cardsPassed, playerKey)) {
                 alert("Please choose 3 cards to pass!")
                 cardsPassed = []
                 handlePassing()
             } else {
-                console.log(cardsPassed.length)
+                // console.log(cardsPassed.length)
+  
                 $("#player").find((".cardSelected")).removeClass("cardSelected")
                 currentGame.passCards(cardsPassed, playerKey)
                 // refreshHand() // breaks showPlayable() but needed to actually pass
