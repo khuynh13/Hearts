@@ -9,7 +9,7 @@
 }
 
 .pane {
-    /* border: thick solid black;     */
+    border: thick solid black;    
     display: -webkit-flex;
     display: flex;
     margin: auto;
@@ -31,12 +31,16 @@
 #table {
     height: auto;
     width: auto;
+    
 }
 
 #table-container {
     height: 100%;
     width: 100%;
+    /* background-color: green; */
+    /* outline-color: black; */
     align-content: center;
+    display: table;
 }
 
 p {
@@ -67,6 +71,53 @@ p {
 .test {
     height: 50px;
 }
+
+.WestPlays {
+    float: left;
+}
+
+.NorthPlays {
+    float: top;
+}
+
+.EastPlays {
+    float: right;
+}
+
+#West {
+    position: relative;
+    margin-left: 0px;
+    /* padding-left: 0px;
+    padding-right: 50px; */
+    padding-left: 0px;
+    padding-right: 200px;
+}
+
+#North {
+    position: relative;
+    margin-top: 0px;
+    /* padding-top: 0px;
+    padding-bottom: 200px; */ 
+    padding-bottom: 200px;
+}
+
+#East {
+    position: relative;
+    margin-right: 0px;
+    /* padding-right: 0px;
+    padding-left: 50px; */
+    padding-left: 200px;
+} 
+
+.played {
+    display: table-cell;
+    outline-color: red;
+    padding: 5px;
+}
+
+
+
+
 
 
 /* body {

@@ -33,24 +33,33 @@ var Player = function(name, uiDiv) {
                 console.log(e.getStartPos())
             }
 
-            // console.log(currentGame.getScore(position))
         })
 
-        // var cardPlayed;
         game.registerEventHandler(Hearts.CARD_PLAYED_EVENT, function(e) {
+            setTimeout(4000)
             console.log("card is played")
             console.log(e.getCard().toString())
             cardPlayed = e.getCard()
+            alert(e.getPosition() + " played " + e.getCard())
+
+            var cardPlayedPng = $("<img src=" + "PNG-cards-1.3/" + cardDict[cardPlayed.toString()] + ".png" + 
+                                    " alt='card text' width= 50px height=73px>")
+
+
+
+        
+            $("#" + e.getPosition()).append(cardPlayedPng)
+            
         })
 
         game.registerEventHandler(Hearts.TRICK_CONTINUE_EVENT, function(e) {
             if (e.getNextPos() === position) {
                 refreshHand()
-                console.log(currentGame.getHand(playerKey).getUnplayedCards(playerKey).length)
                 showPlayable()
             }
         })
 
+    
     } 
 
     var getLastPlayedCard = function() {
@@ -122,20 +131,13 @@ var Player = function(name, uiDiv) {
         if (currentGame.getStatus() === Hearts.PASSING) {
             if ($(".cardSelected").length < 3 || $(this).hasClass('cardSelected')) {
                 $(this).toggleClass('cardSelected')
-            } else {
-                // currentGame.passCards(cardsPassed, playerKey)
-            }
-            // var temp = $(this)
-
-            // if (cardsPassed.length === 3) {
+            } 
 
         }
-
 
     }
 
 
-    // var cardToPlay
     var cardToPlayStack = []
     var handlePlaying = function(e) {
         // if (currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS) {
@@ -180,31 +182,18 @@ var Player = function(name, uiDiv) {
         } else {
             $(this).addClass("cardToPlay")
             cardToPlayStack.push($(this))
-            // cardToPlay = $(this)
             console.log($(e.target).attr("src"))        
-            // cardToPlay = e.target.id
-            // console.log(cardToPlay)
         }
-
-        console.log(cardToPlayStack.length)
-
 
     }
 
     var showPlayable = function() {
-        console.log("showPlayable")
-        //refreshHand()
         if (currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS) {
             $("#player").children(".cards").each(function() {
-                console.log("showPlayable2")
                 var currentImgSrcSuit = $(this).attr('src').split("/")[1].split("_")[2].split(".")[0]
                 currentImgSrcSuit = currentImgSrcSuit.charAt(0).toUpperCase() + currentImgSrcSuit.slice(1)
                 
                 if (currentImgSrcSuit === cardPlayed.toString().split(" ")[2]) {
-                    console.log("showPlayable3")
-                    // alert($(this))  
-                    // console.log($(this).attr("src"))      
-                    // console.log($(this).toggleClass("cardPlayable"))    
                     $(this).addClass("cardPlayable")
                     $(this).on('click', handlePlaying)    
                 }
@@ -212,6 +201,7 @@ var Player = function(name, uiDiv) {
             })
 
         }
+
     }
 
 
@@ -240,12 +230,7 @@ var Player = function(name, uiDiv) {
             cardsPassed = []
             $("button#show-dealt").hide()
         } 
-        // else if (currentGame.getStatus() === Hearts.TRICK_IN_PROGRESS) {
-        //     alert("yo")
-        //     // $("body").on('click', '.cards', handlePlaying)
-        //     showPlayable()
-        //     console.log("Trick in progress")
-        // }     
+
     }
 
     $("button#show-dealt").on('click', showHand)
@@ -255,10 +240,7 @@ var Player = function(name, uiDiv) {
         var cardsPassed = []
         var selected = []
 
-        // var allCardsSelected = $("#player").children(".cardSelected")
         var currentHand = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
-
-        // currentHand.forEach(c => c = c.toString())
 
         Array.from($(".cardSelected")).forEach(c => selected.push(c.id.replace(/_/g, " ")))
         
@@ -271,30 +253,28 @@ var Player = function(name, uiDiv) {
             
         }
 
-        // cardsPassed = $(".cardSelected").toArray()
-        console.log(cardsPassed)
 
         if (currentGame.getStatus() === Hearts.PASSING) {
             if (!currentGame.passCards(cardsPassed, playerKey)) {
                 alert("Please choose 3 cards to pass!")
                 cardsPassed = []
                 handlePassing()
-            } else {
-                // console.log(cardsPassed.length)
-  
+            } else {  
                 $("#player").find((".cardSelected")).removeClass("cardSelected")
                 currentGame.passCards(cardsPassed, playerKey)
-                // refreshHand() // breaks showPlayable() but needed to actually pass
-                // refreshHand()
             }
 
         } 
 
-        if (cardsPassed.length === 3) {
-            cardsPassed = []
-            $("button#pass").hide()
-            $("button#play-card").show()
-        }
+        // if (cardsPassed.length === 3) {
+        //     cardsPassed = []
+        //     $("button#pass").hide()
+        //     $("button#play-card").show()
+        // }
+
+        cardsPassed = []
+        $("button#pass").hide()
+        $("button#play-card").show()
 
     })
 
