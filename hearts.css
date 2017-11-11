@@ -72,25 +72,13 @@ p {
     height: 50px;
 }
 
-.WestPlays {
-    float: left;
-}
-
-.NorthPlays {
-    float: top;
-}
-
-.EastPlays {
-    float: right;
-}
-
 #West {
     position: relative;
     margin-left: 0px;
     /* padding-left: 0px;
     padding-right: 50px; */
-    padding-left: 0px;
-    padding-right: 200px;
+    /* padding-left: 0px;
+    padding-right: 200px; */
 }
 
 #North {
@@ -98,7 +86,7 @@ p {
     margin-top: 0px;
     /* padding-top: 0px;
     padding-bottom: 200px; */ 
-    padding-bottom: 200px;
+    /* padding-bottom: 200px; */
 }
 
 #East {
@@ -106,7 +94,7 @@ p {
     margin-right: 0px;
     /* padding-right: 0px;
     padding-left: 50px; */
-    padding-left: 200px;
+    /* padding-left: 200px; */
 } 
 
 .played {
@@ -114,6 +102,28 @@ p {
     outline-color: red;
     padding: 5px;
 }
+
+#playing-table {
+    table-layout: relative;
+    width: 750px;
+    height: 100px;
+    border: 15px solid rgb(119, 44, 44);
+    border-radius: 15px;
+    background-color: green;
+    text-align: center;
+}
+
+td {
+    height: 100px;
+}
+
+/* td {
+    height: 100px;
+}
+
+tr {
+    height: 75px;
+} */
 
 
 

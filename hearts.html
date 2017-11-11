@@ -24,16 +24,32 @@
                 <p>player west here</p>
             </div>
             <div id="table" class="flex-item">
-                <!-- <img src="table.png" alt="table">      -->
-                <!-- <p>insert cards here</p> -->
-                <div id="table-container" class="flex-item">
-                    <!-- <p class="WestPlays">table container</p>            -->
-                    <!-- <img src="table.png" alt="table"> -->
-                    <div id="West"  class="played"></div>
-                    <div id="North"  class="played"></div>
-                    <div id="East"  class="played"></div>
-                    <div id="South"  class="played"></div>
-                </div>
+                <table id="playing-table">
+                    <tr id="row1">
+                        <td>---</td>
+                        <td>North Plays
+                            <div id="North"></div>
+                        </td>
+                        <td>---</td>
+                    </tr>
+                    <tr id="row2">
+                        <td>West Plays
+                            <div id="West"></div>
+                        </td>
+                        <td>---</td>
+                        <td>East Plays
+                            <div id="East"></div>
+                        </td>
+                    </tr>
+                    <tr id="row3">
+                        <td>---</td>
+                        <td>South Plays
+                            <div id="South"></div>
+                        </td>
+                        <td>---</td>
+                    </tr>
+                </table>
+
             </div>
             <div id="east-player" class="flex-item">
                 <p>east player here</p>
