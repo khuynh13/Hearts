@@ -19,25 +19,48 @@ var DumbAI = function (name) {
 	player_key = pkey;
 
 	current_game.registerEventHandler(Hearts.GAME_STARTED_EVENT, function (e) {
-	    if (e.getPassType() != Hearts.PASS_NONE) {
-		var cards = current_game.getHand(player_key).getDealtCards(player_key);
+		setTimeout(function() {
+			if (e.getPassType() != Hearts.PASS_NONE) {
+				var cards = current_game.getHand(player_key).getDealtCards(player_key);
+				current_game.passCards(cards.splice(0,3), player_key);
+			}
+		}, 3000)
+
+
+
+	    // if (e.getPassType() != Hearts.PASS_NONE) {
+		// var cards = current_game.getHand(player_key).getDealtCards(player_key);
 		
-		current_game.passCards(cards.splice(0,3), player_key);
-	    }
+		// current_game.passCards(cards.splice(0,3), player_key);
+	    // }
 	});
 
 	current_game.registerEventHandler(Hearts.TRICK_START_EVENT, function (e) {
-	    if (e.getStartPos() == position) {
-		var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
-		current_game.playCard(playable_cards[0], player_key);
-	    }
+	    // if (e.getStartPos() == position) {
+		// var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
+		// current_game.playCard(playable_cards[0], player_key);
+		// }
+		
+		setTimeout(function() {
+			if (e.getStartPos() == position) {
+				var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
+				current_game.playCard(playable_cards[0], player_key);
+				}
+		}, 3000)
 	});
 
 	current_game.registerEventHandler(Hearts.TRICK_CONTINUE_EVENT, function (e) {
-	    if (e.getNextPos() == position) {
-		var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
-		current_game.playCard(playable_cards[0], player_key);
-	    }
+	    // if (e.getNextPos() == position) {
+		// var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
+		// current_game.playCard(playable_cards[0], player_key);
+		// }
+		
+		setTimeout(function() {
+			if (e.getNextPos() == position) {
+				var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
+				current_game.playCard(playable_cards[0], player_key);
+				}
+		}, 3000)
 	});
     }
 }
