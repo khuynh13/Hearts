@@ -9,7 +9,7 @@
 }
 
 .pane {
-    border: thick solid black;    
+    /* border: thick solid black;     */
     display: -webkit-flex;
     display: flex;
     margin: auto;
@@ -97,6 +97,12 @@ p {
     /* padding-left: 200px; */
 } 
 
+#player {
+    width: 65%;
+    display: block;
+    /* display: flex; */
+}
+
 .played {
     display: table-cell;
     outline-color: red;
@@ -115,23 +121,11 @@ p {
 
 td {
     height: 100px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: green;
+
 }
 
-/* td {
-    height: 100px;
-}
 
-tr {
-    height: 75px;
-} */
-
-
-
-
-
-
-/* body {
-    background-color: rgb(2, 66, 29);
-} */
 
 
