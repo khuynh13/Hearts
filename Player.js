@@ -14,21 +14,12 @@ var Player = function(name, uiDiv) {
     }
 
     this.setupMatch = function(heartsMatch, pos) {
-        username = window.prompt("Please enter your name", "South Player")
-        // $("div#south-label").append("<p>" + username + ", Score: 0</p>")        
-        // $("div#player").append("<div class='score' id='south-score'><p>" + username + ", Score: 0</p></div>")             
-        
-        // if (currentGame === null) {
-        //     $("div#player").append("<div class='score' id='south-score'><p>" + username + ", Score: 0</p></div>")             
-        // } else {
-        //     $("div#player").append("<div class='score' id='south-score'><p>" + username + ", Score: " + currentGame.getScore(Hearts.SOUTH) + "</p></div>")             
-        // }
+        username = window.prompt("Please enter your name", "SOUTH PLAYER")
 
         $("div#north-label").append("<p>NORTH PLAYER [SCORE: " + getCurrentScore(Hearts.NORTH) + "]</p>")
         $("div#east-label").append("<p>EAST PLAYER [SCORE: " + getCurrentScore(Hearts.EAST) + "]</p>")
         $("div#west-label").append("<p>WEST PLAYER [SCORE: " + getCurrentScore(Hearts.WEST) + "]</p>")
         $("div#player").append("<div class='score' id='south-score'><p>" + username + " [SCORE: " + getCurrentScore(Hearts.SOUTH) + "]</p></div>")
-                
 
         match = heartsMatch
         position = pos
@@ -41,8 +32,6 @@ var Player = function(name, uiDiv) {
 
         game.registerEventHandler(Hearts.GAME_STARTED_EVENT, function(e) {
             showStatus("GAME STARTED")
-            console.log(e.getPassType())
-            // showStatus("CHOOSE 3 CARDS TO PASS")
             
             for (i = 0; i < 13; i++) {
                 $("div#North-hand").append("<img src='face-down-card.png' width=50px height=73px>") 
@@ -86,7 +75,6 @@ var Player = function(name, uiDiv) {
         game.registerEventHandler(Hearts.TRICK_COMPLETE_EVENT, function(e) {
             showStatus(e.getTrick().getWinner() + " wins the trick!")
             setTimeout(function() {
-                // alert(e.getTrick().getWinner() + " wins the trick!")
                 emptyView()
             }, 1500) 
         })
@@ -100,12 +88,9 @@ var Player = function(name, uiDiv) {
             $("div.score").empty()
             $("div#north-label").append("<p>NORTH PLAYER [SCORE: " + match.getScoreboard()[Hearts.NORTH] + "]</p>")
             $("div#east-label").append("<p>EAST PLAYER [SCORE: " + match.getScoreboard()[Hearts.EAST] + "]</p>")
-            $("div#west-label").append("<p>WEST PLAYER [SCORE: " + match.getScoreboard()[Hearts.WEST] + "]</p>")
-            // $("div#south-label").append("<p>" + username + ", Score: " + currentGame.getScore(Hearts.SOUTH) + "</p>")
-            // $("div#south-label").append("<p>" + username + ", Score: " + currentGame.getScore(Hearts.SOUTH) + "</p>")    
+            $("div#west-label").append("<p>WEST PLAYER [SCORE: " + match.getScoreboard()[Hearts.WEST] + "]</p>")   
             $("div#player").append("<div class='score' id='south-score'><p>" + username + " [SCORE: " + match.getScoreboard()[Hearts.SOUTH] + "]</p></div>")
             
-            // alert("GAME OVER")
             showStatus("GAME OVER")
         }) 
     } 
@@ -116,10 +101,6 @@ var Player = function(name, uiDiv) {
         $("div#East").empty()
         $("div#South").empty()
     }
-
-    // var getLastPlayedCard = function() {
-    //     return cardPlayed
-    // }
 
     var cardDict = {
         "Two of Clubs": "2_of_clubs",
@@ -176,12 +157,6 @@ var Player = function(name, uiDiv) {
         "Ace of Spades": "ace_of_spades",        
     }
 
-    // for (i = 0; i < 13; i++) {
-    //     $("div#North-hand").append("<img src='face-down-card.png' width=50px height=73px>") 
-    //     $("div#East-hand").append("<img src='face-down-card.png' width=50px height=73px>")  
-    //     $("div#West-hand").append("<img src='face-down-card.png' width=50px height=73px>")         
-    // }
-
     var handlePassing = function(e) {
         if ($(".cardSelected").length === 3) {
             if ($(this).hasClass("cardSelected")) { 
@@ -215,6 +190,8 @@ var Player = function(name, uiDiv) {
                 var cardPng = "/" + cardDict[c] + ".png"
                 $('div#player').find("img[src$='" + cardPng + "']").addClass("cardPlayable").on('click', handlePlaying)
             })
+
+            if (playableCards[0] === "Two of Clubs") showStatus("PLAY THE TWO OF CLUBS TO BEGIN")
         }
     }
 
@@ -236,7 +213,6 @@ var Player = function(name, uiDiv) {
         })
 
         if (currentGame.getStatus() === Hearts.PASSING) {
-            // setTimeout(showStatus("CHOOSE 3 CARDS TO PASS"), 1500)
             $(".cards").on('click', handlePassing)
             cardsPassed = []
             $("button#show-dealt").hide()
@@ -265,8 +241,7 @@ var Player = function(name, uiDiv) {
 
         if (currentGame.getStatus() === Hearts.PASSING) {
             if (!currentGame.passCards(cardsPassed, playerKey)) {
-                // alert("Please choose 3 cards to pass!")
-                showStatus("Please choose 3 cards to pass!")
+                showStatus("PLEASE CHOOSE 3 CARDS TO PASS")
                 handlePassing()
             } else {  
                 $("#player").find((".cardSelected")).removeClass("cardSelected")
@@ -289,14 +264,18 @@ var Player = function(name, uiDiv) {
 
     var showStatus = function(status) {
         $("td#status").empty()
-        $("td#status").html(status)
+        if (status === "GAME STARTED") {
+            $("td#status").html(status + "<br/>----------<br/>SELECT 3 CARDS TO PASS")   
+        } else {
+            $("td#status").html(status)
+        }
+
         setTimeout(function() {
             $("td#status").empty()            
-        }, 1500)
+        }, 2000)
     }
 
     var refreshHand = function() {
-        console.log("refreshing hand")
         $("div#player").empty()
         $("div#player").append("<div class='score' id='south-score'><p>" + username + " [SCORE: " + getCurrentScore() + "]</p></div>")
         var dealt = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
@@ -326,14 +305,8 @@ var Player = function(name, uiDiv) {
         })
 
         if (!currentGame.playCard(cardToPlay[0], playerKey)) {
-            // alert("Please select one card to play!")
             showStatus("Please select one card to play!")
-        } else {
-            // currentGame.playCard(cardToPlay[0], playerKey)
-        }
-        
+        } 
     })
-
-
 
 }
