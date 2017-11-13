@@ -24,7 +24,7 @@ var DumbAI = function (name) {
 				var cards = current_game.getHand(player_key).getDealtCards(player_key);
 				current_game.passCards(cards.splice(0,3), player_key);
 			}
-		}, 3000)
+		}, 1500)
 
 
 
@@ -46,7 +46,7 @@ var DumbAI = function (name) {
 				var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
 				current_game.playCard(playable_cards[0], player_key);
 				}
-		}, 3000)
+		}, 1500)
 	});
 
 	current_game.registerEventHandler(Hearts.TRICK_CONTINUE_EVENT, function (e) {
@@ -60,7 +60,7 @@ var DumbAI = function (name) {
 				var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
 				current_game.playCard(playable_cards[0], player_key);
 				}
-		}, 3000)
+		}, 1500)
 	});
     }
 }
