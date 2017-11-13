@@ -48,6 +48,7 @@ var Player = function(name, uiDiv) {
         })
 
         game.registerEventHandler(Hearts.TRICK_START_EVENT, function(e) {
+            showStatus("TRICK STARTED")
             refreshHand()
             showPlayable()
         })
