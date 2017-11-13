@@ -24,43 +24,25 @@ var DumbAI = function (name) {
 				var cards = current_game.getHand(player_key).getDealtCards(player_key);
 				current_game.passCards(cards.splice(0,3), player_key);
 			}
-		}, 1500)
-
-
-
-	    // if (e.getPassType() != Hearts.PASS_NONE) {
-		// var cards = current_game.getHand(player_key).getDealtCards(player_key);
-		
-		// current_game.passCards(cards.splice(0,3), player_key);
-	    // }
+		}, 2200)
 	});
 
 	current_game.registerEventHandler(Hearts.TRICK_START_EVENT, function (e) {
-	    // if (e.getStartPos() == position) {
-		// var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
-		// current_game.playCard(playable_cards[0], player_key);
-		// }
-		
 		setTimeout(function() {
 			if (e.getStartPos() == position) {
 				var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
 				current_game.playCard(playable_cards[0], player_key);
-				}
-		}, 1500)
+			}
+		}, 2200)
 	});
 
 	current_game.registerEventHandler(Hearts.TRICK_CONTINUE_EVENT, function (e) {
-	    // if (e.getNextPos() == position) {
-		// var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
-		// current_game.playCard(playable_cards[0], player_key);
-		// }
-		
 		setTimeout(function() {
 			if (e.getNextPos() == position) {
 				var playable_cards = current_game.getHand(player_key).getPlayableCards(player_key);
 				current_game.playCard(playable_cards[0], player_key);
 				}
-		}, 1500)
+		}, 2200)
 	});
     }
 }
