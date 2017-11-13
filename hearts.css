@@ -6,6 +6,7 @@ div.cards_pane{
     margin: auto;
     width: auto;
     padding: 10px;
+    text-align: center;
 }
 
 div.pane {
@@ -23,6 +24,7 @@ div.flex-item {
     width: 350px;
     height: auto;
     margin: auto;
+    text-align: center;
 }
 
 div#table {
@@ -80,7 +82,7 @@ td#status {
     color: white;
 }
 
-div.score, div#button-panel {
+div.score, div#button-panel, div#player {
     text-align: center;
 }
 
@@ -93,7 +95,7 @@ button.op-button {
 div.score p {
     text-align: center;
     color: white;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 
