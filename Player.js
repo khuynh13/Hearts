@@ -5,6 +5,7 @@ var Player = function(name, uiDiv) {
     var currentGame = null
     var playerKey = null
     var cardPlayed = null
+    var username = null
 
     var hasPassed = false;
 
@@ -13,6 +14,22 @@ var Player = function(name, uiDiv) {
     }
 
     this.setupMatch = function(heartsMatch, pos) {
+        username = window.prompt("Please enter your name", "South Player")
+        // $("div#south-label").append("<p>" + username + ", Score: 0</p>")        
+        // $("div#player").append("<div class='score' id='south-score'><p>" + username + ", Score: 0</p></div>")             
+        
+        // if (currentGame === null) {
+        //     $("div#player").append("<div class='score' id='south-score'><p>" + username + ", Score: 0</p></div>")             
+        // } else {
+        //     $("div#player").append("<div class='score' id='south-score'><p>" + username + ", Score: " + currentGame.getScore(Hearts.SOUTH) + "</p></div>")             
+        // }
+
+        $("div#north-label").append("<p>NORTH PLAYER [SCORE: " + getCurrentScore(Hearts.NORTH) + "]</p>")
+        $("div#east-label").append("<p>EAST PLAYER [SCORE: " + getCurrentScore(Hearts.EAST) + "]</p>")
+        $("div#west-label").append("<p>WEST PLAYER [SCORE: " + getCurrentScore(Hearts.WEST) + "]</p>")
+        $("div#player").append("<div class='score' id='south-score'><p>" + username + " [SCORE: " + getCurrentScore(Hearts.SOUTH) + "]</p></div>")
+                
+
         match = heartsMatch
         position = pos
     }
@@ -22,18 +39,24 @@ var Player = function(name, uiDiv) {
         playerKey = pKey
 
 
-        game.registerEventHandler(Hearts.ALL_EVENTS, function(e) {
-            // alert(e.event_type)
+        game.registerEventHandler(Hearts.GAME_STARTED_EVENT, function(e) {
+            showStatus("GAME STARTED")
+            console.log(e.getPassType())
+            // showStatus("CHOOSE 3 CARDS TO PASS")
+            
+            for (i = 0; i < 13; i++) {
+                $("div#North-hand").append("<img src='face-down-card.png' width=50px height=73px>") 
+                $("div#East-hand").append("<img src='face-down-card.png' width=50px height=73px>")  
+                $("div#West-hand").append("<img src='face-down-card.png' width=50px height=73px>")         
+            }
+
+            showHand()
+            $("button#play-card").hide()
+            $("button#pass").show()
+
         })
 
         game.registerEventHandler(Hearts.TRICK_START_EVENT, function(e) {
-            // if (e.getStartPos() === position) {
-            //     setTimeout(emptyView(), 5000)
-            //     refreshHand()
-            //     showPlayable()
-            // } 
-
-            // emptyView() // commenting out this line breaks showPlayable
             refreshHand()
             showPlayable()
         })
@@ -43,62 +66,48 @@ var Player = function(name, uiDiv) {
         })
 
         game.registerEventHandler(Hearts.CARD_PLAYED_EVENT, function(e) {
-            // alert(e.getPosition() + " played " + e.getCard().toString())
             cardPlayed = e.getCard()
             var cardPlayedPng = $("<img src='PNG-cards-1.3/" + cardDict[cardPlayed.toString()] + ".png'" 
                                     + " alt='card text' width=60px height=82px>")
 
-            // var event = e                    
-            // setTimeout(function() {
-            //     $("#" + event.getPosition()).append(cardPlayedPng)
-            //     $("#" + event.getPosition() + "-hand").children().last().remove(); // remove one card from hand
-            // }, 5000)
-
-        
-            $("#" + e.getPosition()).append(cardPlayedPng)
-            $("#" + e.getPosition() + "-hand").children().last().remove(); // remove one card from hand
+            $("div#" + e.getPosition()).append(cardPlayedPng)
+            $("div#" + e.getPosition() + "-hand").children().last().remove(); // remove one card from hand view
             refreshHand()
-            
         })
 
         game.registerEventHandler(Hearts.TRICK_CONTINUE_EVENT, function(e) {
-            // alert(e.getNextPos())
             if (e.getNextPos() === position) {
+                showStatus("YOUR TURN")
                 refreshHand()
                 showPlayable()
             }
-
         })
 
         game.registerEventHandler(Hearts.TRICK_COMPLETE_EVENT, function(e) {
-            // alert("Trick Completed!")
-            // console.log(e.getTrick())
-            // console.log(e.getTrick().getWinner() + " wins with " + currentGame.getScore(Hearts.WEST))
-            // console.log(e.getTrick().getWinner() + " wins with " + currentGame.getScore(Hearts.NORTH))
-            // console.log(e.getTrick().getWinner() + " wins with " + currentGame.getScore(Hearts.EAST))
-            // console.log(e.getTrick().getWinner() + " wins with " + currentGame.getScore(Hearts.SOUTH))
-            // TRICK_STARTED_EVENT is immediately fired
-            // emptyView won't execute because game is caught up with TRICK_STARTED_EVENT
-            // setTimeout(emptyView, 5000)
-
-            // setTimeout(function() {
-            //     // alert(e.getTrick().getWinner() + " wins the trick!")
-            //     emptyView()
-            // }, 5000)
-
+            showStatus(e.getTrick().getWinner() + " wins the trick!")
             setTimeout(function() {
-                alert(e.getTrick().getWinner() + " wins the trick!")
+                // alert(e.getTrick().getWinner() + " wins the trick!")
                 emptyView()
-            }, 3000)
-
-            
+            }, 1500) 
         })
 
         game.registerEventHandler(Hearts.GAME_OVER_EVENT, function(e) {
-            alert("GAME OVER")
-        }) 
+            console.log(match.getScoreboard(Hearts.NORTH))
+            console.log(match.getScoreboard(Hearts.EAST))
+            console.log(match.getScoreboard(Hearts.SOUTH))
+            console.log(match.getScoreboard(Hearts.WEST))
 
-    
+            $("div.score").empty()
+            $("div#north-label").append("<p>NORTH PLAYER [SCORE: " + match.getScoreboard()[Hearts.NORTH] + "]</p>")
+            $("div#east-label").append("<p>EAST PLAYER [SCORE: " + match.getScoreboard()[Hearts.EAST] + "]</p>")
+            $("div#west-label").append("<p>WEST PLAYER [SCORE: " + match.getScoreboard()[Hearts.WEST] + "]</p>")
+            // $("div#south-label").append("<p>" + username + ", Score: " + currentGame.getScore(Hearts.SOUTH) + "</p>")
+            // $("div#south-label").append("<p>" + username + ", Score: " + currentGame.getScore(Hearts.SOUTH) + "</p>")    
+            $("div#player").append("<div class='score' id='south-score'><p>" + username + " [SCORE: " + match.getScoreboard()[Hearts.SOUTH] + "]</p></div>")
+            
+            // alert("GAME OVER")
+            showStatus("GAME OVER")
+        }) 
     } 
 
     var emptyView = function() {
@@ -108,9 +117,9 @@ var Player = function(name, uiDiv) {
         $("div#South").empty()
     }
 
-    var getLastPlayedCard = function() {
-        return cardPlayed
-    }
+    // var getLastPlayedCard = function() {
+    //     return cardPlayed
+    // }
 
     var cardDict = {
         "Two of Clubs": "2_of_clubs",
@@ -167,26 +176,21 @@ var Player = function(name, uiDiv) {
         "Ace of Spades": "ace_of_spades",        
     }
 
-    for (i = 0; i < 13; i++) {
-        $("#North-hand").append("<img src='face-down-card.png' width=50px height=73px>") 
-        $("#East-hand").append("<img src='face-down-card.png' width=50px height=73px>")  
-        $("#West-hand").append("<img src='face-down-card.png' width=50px height=73px>")         
-    }
+    // for (i = 0; i < 13; i++) {
+    //     $("div#North-hand").append("<img src='face-down-card.png' width=50px height=73px>") 
+    //     $("div#East-hand").append("<img src='face-down-card.png' width=50px height=73px>")  
+    //     $("div#West-hand").append("<img src='face-down-card.png' width=50px height=73px>")         
+    // }
 
     var handlePassing = function(e) {
-        // if (currentGame.getStatus() === Hearts.PASSING) {
-        //     if ($(".cardSelected").length < 3 || $(this).hasClass('cardSelected')) {
-        //         $(this).toggleClass('cardSelected')
-        //     } 
-        // }
         if ($(".cardSelected").length === 3) {
-            if ($(this).hasClass("cardSelected")) { // unselect
+            if ($(this).hasClass("cardSelected")) { 
                 $(this).toggleClass("cardSelected")
-            } else {
+            } else { 
                 $(".cardSelected").first().toggleClass("cardSelected")
                 $(this).toggleClass("cardSelected")
             }
-        } else {
+        } else { 
             $(this).toggleClass("cardSelected")
         }
     }
@@ -206,39 +210,33 @@ var Player = function(name, uiDiv) {
 
             var playableCards = currentGame.getHand(playerKey).getPlayableCards(playerKey)
             playableCards = playableCards.map(c => c.toString())
-            // console.log(playableCards)
 
             playableCards.forEach(function(c) {
                 var cardPng = "/" + cardDict[c] + ".png"
-                // console.log(c)
-                $('#player').find("img[src$='" + cardPng + "']").addClass("cardPlayable").on('click', handlePlaying)
+                $('div#player').find("img[src$='" + cardPng + "']").addClass("cardPlayable").on('click', handlePlaying)
             })
-
         }
-
     }
 
     var showHand = function() {
         var dealt = currentGame.getHand(playerKey).getUnplayedCards(playerKey);
         var img;
         dealt.forEach(function(c) {
-            var displayedCards = $('img').map(function() { return this.src }).get()
+            var displayedCards = $("img").map(function() { return this.src }).get()
     
             for (card in displayedCards) {
                 if (displayedCards[card].indexOf(cardDict[c.toString()]) !== -1) {
                     return
                 }
-    
             } 
             
             var cardName = c.toString().replace(/\s/g, "_")
-            img = $("<img class='cards' id=" + cardName + " src=" + "PNG-cards-1.3/" + cardDict[c.toString()] + ".png" + " alt='card text' width= 70px height=95px>")
-
-            $("#player").append(img); 
-
+            img = $("<img class='cards' id=" + cardName + " src=" + "PNG-cards-1.3/" + cardDict[c.toString()] + ".png" + " alt='card text' width= 68px height=93px>")
+            $("div#player").append(img); 
         })
 
         if (currentGame.getStatus() === Hearts.PASSING) {
+            // setTimeout(showStatus("CHOOSE 3 CARDS TO PASS"), 1500)
             $(".cards").on('click', handlePassing)
             cardsPassed = []
             $("button#show-dealt").hide()
@@ -265,10 +263,10 @@ var Player = function(name, uiDiv) {
             
         }
 
-
         if (currentGame.getStatus() === Hearts.PASSING) {
             if (!currentGame.passCards(cardsPassed, playerKey)) {
-                alert("Please choose 3 cards to pass!")
+                // alert("Please choose 3 cards to pass!")
+                showStatus("Please choose 3 cards to pass!")
                 handlePassing()
             } else {  
                 $("#player").find((".cardSelected")).removeClass("cardSelected")
@@ -277,24 +275,30 @@ var Player = function(name, uiDiv) {
                 $("button#pass").hide()
                 $("button#play-card").show()
             }
-
-        } 
-
-        // if (cardsPassed.length === 3) {
-        //     cardsPassed = []
-        //     $("button#pass").hide()
-        //     $("button#play-card").show()
-        // }
-
-        // cardsPassed = []
-        // $("button#pass").hide()
-        // $("button#play-card").show()
+        }
 
     })
 
+    var getCurrentScore = function(pos) {
+        if (currentGame === null || currentGame.getScore(pos) === undefined) {
+            return 0
+        } else {
+            return currentGame.getScore(pos)
+        }
+    }
+
+    var showStatus = function(status) {
+        $("td#status").empty()
+        $("td#status").html(status)
+        setTimeout(function() {
+            $("td#status").empty()            
+        }, 1500)
+    }
+
     var refreshHand = function() {
         console.log("refreshing hand")
-        $("#player").empty()
+        $("div#player").empty()
+        $("div#player").append("<div class='score' id='south-score'><p>" + username + " [SCORE: " + getCurrentScore() + "]</p></div>")
         var dealt = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
         dealt.forEach(function(c) {
             var displayedCards = $('img').map(function() { return this.src }).get()
@@ -306,17 +310,15 @@ var Player = function(name, uiDiv) {
     
             } 
             
-            var img = $("<img class='cards' src=" + "PNG-cards-1.3/" + cardDict[c.toString()] + ".png" + " alt='card text' width= 70px height=95px>")
+            var img = $("<img class='cards' src=" + "PNG-cards-1.3/" + cardDict[c.toString()] + ".png" + " alt='card text' width= 68px height=93px>")
 
-            $("#player").append(img)
+            $("div#player").append(img)
         })
         
     }
 
     $("button#play-card").on('click', function(e) {
         var playableCards = currentGame.getHand(playerKey).getPlayableCards(playerKey)
-        // playableCards = playableCards.map(c => c.toString())
-
         var cardSelectedToPlay = $("div#player").find(".cardToPlay").attr("src").split("/")[1] // grab name of png
 
         var cardToPlay = playableCards.filter(function(c) {
@@ -324,13 +326,10 @@ var Player = function(name, uiDiv) {
         })
 
         if (!currentGame.playCard(cardToPlay[0], playerKey)) {
-            alert("Please select one card to play!")
+            // alert("Please select one card to play!")
+            showStatus("Please select one card to play!")
         } else {
-            currentGame.playCard(cardToPlay[0], playerKey)
-            // below not needed since register card played event does the work
-            // var cardToPlayPng = $("<img src='PNG-cards-1.3/" + cardDict[cardToPlay[0].toString()] 
-            //                         + ".png'" + " alt='card text' width=60px height=82px")
-            // $("div#South").append("<img src='PNG-cards-1.3/2_of_clubs.png' alt='card text' width=60px height=82px")
+            // currentGame.playCard(cardToPlay[0], playerKey)
         }
         
     })
