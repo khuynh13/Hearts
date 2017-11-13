@@ -15,6 +15,7 @@ var Player = function(name, uiDiv) {
 
     this.setupMatch = function(heartsMatch, pos) {
         username = window.prompt("Please enter your name", "SOUTH PLAYER")
+        username = username.toUpperCase()
 
         $("div#north-label").append("<p>NORTH PLAYER [SCORE: " + getCurrentScore(Hearts.NORTH) + "]</p>")
         $("div#east-label").append("<p>EAST PLAYER [SCORE: " + getCurrentScore(Hearts.EAST) + "]</p>")
@@ -31,6 +32,7 @@ var Player = function(name, uiDiv) {
 
 
         game.registerEventHandler(Hearts.GAME_STARTED_EVENT, function(e) {
+            showStatus("NEW GAME")
             showStatus("GAME STARTED")
             
             for (i = 0; i < 13; i++) {
@@ -73,17 +75,18 @@ var Player = function(name, uiDiv) {
         })
 
         game.registerEventHandler(Hearts.TRICK_COMPLETE_EVENT, function(e) {
-            showStatus(e.getTrick().getWinner() + " wins the trick!")
+            showStatus(e.getTrick().getWinner().toUpperCase() + " WINS THE TRICK")
             setTimeout(function() {
                 emptyView()
             }, 1500) 
         })
 
         game.registerEventHandler(Hearts.GAME_OVER_EVENT, function(e) {
-            console.log(match.getScoreboard(Hearts.NORTH))
-            console.log(match.getScoreboard(Hearts.EAST))
-            console.log(match.getScoreboard(Hearts.SOUTH))
-            console.log(match.getScoreboard(Hearts.WEST))
+            console.log(match.getScoreboard()[Hearts.NORTH])
+            console.log(match.getScoreboard()[Hearts.EAST])
+            console.log(match.getScoreboard()[Hearts.SOUTH])
+            console.log(match.getScoreboard()[Hearts.WEST])
+            
 
             $("div.score").empty()
             $("div#north-label").append("<p>NORTH PLAYER [SCORE: " + match.getScoreboard()[Hearts.NORTH] + "]</p>")
@@ -264,6 +267,7 @@ var Player = function(name, uiDiv) {
 
     var showStatus = function(status) {
         $("td#status").empty()
+        
         if (status === "GAME STARTED") {
             $("td#status").html(status + "<br/>----------<br/>SELECT 3 CARDS TO PASS")   
         } else {
@@ -272,12 +276,13 @@ var Player = function(name, uiDiv) {
 
         setTimeout(function() {
             $("td#status").empty()            
-        }, 2000)
+        }, 1500)
     }
 
     var refreshHand = function() {
         $("div#player").empty()
-        $("div#player").append("<div class='score' id='south-score'><p>" + username + " [SCORE: " + getCurrentScore() + "]</p></div>")
+        $("div#player").append("<div class='score' id='south-score'><p>" + username + " [SCORE: " + match.getScoreboard()[Hearts.SOUTH] + "]</p></div>")
+        
         var dealt = currentGame.getHand(playerKey).getUnplayedCards(playerKey)
         dealt.forEach(function(c) {
             var displayedCards = $('img').map(function() { return this.src }).get()
