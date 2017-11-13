@@ -1,15 +1,14 @@
+html {
+    background-color: rgb(152, 141, 185);    
+}
 
 div.cards_pane{
-    /* display: -webkit-flex;
-    display: flex; */
     margin: auto;
     width: auto;
-    /* border: 3px solid green; */
     padding: 10px;
 }
 
 div.pane {
-    /* border: thick solid black;     */
     display: -webkit-flex;
     display: flex;
     margin: auto;
@@ -17,13 +16,11 @@ div.pane {
     padding: 5px;
     min-height: 200px;
     overflow: hidden;
-    background-color: lightgrey;
+    background-color: rgb(152, 141, 185);    
 }
 
 div.flex-item {
-    /* background-color: green; */
     width: 350px;
-    /* height: 350px; */
     height: auto;
     margin: auto;
 }
@@ -31,36 +28,26 @@ div.flex-item {
 div#table {
     height: auto;
     width: auto;
-    
 }
-
-/* #table-container {
-    height: 100%;
-    width: 100%; */
-    /* background-color: green; */
-    /* outline-color: black; */
-    /* align-content: center;
-    display: table;
-} */
 
 p {
     color: black;
 }
 
 img.cardSelected {
-    outline-color: blue;
-    outline-style: solid;
-    outline-width: 2px;
+    outline-color: red;
+    outline-style: dashed;
+    outline-width: 3px;
 }
 
 img.cards {
-    padding: 3px;
+    padding: 5px;
 }
 
 img.cardPlayable {
-    outline-color: red!important;
-    outline-style: solid!important;
-    outline-width: 2px!important;
+    outline-color: red;
+    outline-style: dashed;
+    outline-width: 2px;
 }
 
 img.cardToPlay {
@@ -68,48 +55,16 @@ img.cardToPlay {
     box-shadow: 0px 12px 22px 1px #333;
 }
 
-/* #West {
-    position: relative;
-    margin-left: 0px; */
-    /* padding-left: 0px;
-    padding-right: 50px; */
-    /* padding-left: 0px;
-    padding-right: 200px; */
-/* } */
-
-/* #North {
-    position: relative;
-    margin-top: 0px; */
-    /* padding-top: 0px;
-    padding-bottom: 200px; */ 
-    /* padding-bottom: 200px; */
-/* } */
-
-/* #East {
-    position: relative;
-    margin-right: 0px; */
-    /* padding-right: 0px;
-    padding-left: 50px; */
-    /* padding-left: 200px; */
-/* }  */
-
 div#player {
     width: 65%;
     display: block;
-    /* display: flex; */
 }
-
-/* .played {
-    display: table-cell;
-    outline-color: red;
-    padding: 5px;
-} */
 
 table#playing-table {
     table-layout: relative;
     width: 750px;
     height: 100px;
-    border: 15px solid rgb(119, 44, 44);
+    border: 15px solid rgb(148, 21, 21);  
     border-radius: 15px;
     background-color: darkgreen;
     text-align: center;
@@ -119,7 +74,6 @@ td {
     height: 100px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: darkgreen;
-
 }
 
 td#status {
