@@ -1,5 +1,5 @@
 
-.cards_pane{
+div.cards_pane{
     /* display: -webkit-flex;
     display: flex; */
     margin: auto;
@@ -8,7 +8,7 @@
     padding: 10px;
 }
 
-.pane {
+div.pane {
     /* border: thick solid black;     */
     display: -webkit-flex;
     display: flex;
@@ -20,7 +20,7 @@
     background-color: lightgrey;
 }
 
-.flex-item {
+div.flex-item {
     /* background-color: green; */
     width: 350px;
     /* height: 350px; */
@@ -28,102 +28,118 @@
     margin: auto;
 }
 
-#table {
+div#table {
     height: auto;
     width: auto;
     
 }
 
-#table-container {
+/* #table-container {
     height: 100%;
-    width: 100%;
+    width: 100%; */
     /* background-color: green; */
     /* outline-color: black; */
-    align-content: center;
+    /* align-content: center;
     display: table;
-}
+} */
 
 p {
     color: black;
 }
 
-.cardSelected {
+img.cardSelected {
     outline-color: blue;
     outline-style: solid;
     outline-width: 2px;
 }
 
-.cards {
+img.cards {
     padding: 3px;
 }
 
-.cardPlayable {
+img.cardPlayable {
     outline-color: red!important;
     outline-style: solid!important;
     outline-width: 2px!important;
 }
 
-.cardToPlay {
+img.cardToPlay {
     background-color: yellow;
     box-shadow: 0px 12px 22px 1px #333;
 }
 
-.test {
-    height: 50px;
-}
-
-#West {
+/* #West {
     position: relative;
-    margin-left: 0px;
+    margin-left: 0px; */
     /* padding-left: 0px;
     padding-right: 50px; */
     /* padding-left: 0px;
     padding-right: 200px; */
-}
+/* } */
 
-#North {
+/* #North {
     position: relative;
-    margin-top: 0px;
+    margin-top: 0px; */
     /* padding-top: 0px;
     padding-bottom: 200px; */ 
     /* padding-bottom: 200px; */
-}
+/* } */
 
-#East {
+/* #East {
     position: relative;
-    margin-right: 0px;
+    margin-right: 0px; */
     /* padding-right: 0px;
     padding-left: 50px; */
     /* padding-left: 200px; */
-} 
+/* }  */
 
-#player {
+div#player {
     width: 65%;
     display: block;
     /* display: flex; */
 }
 
-.played {
+/* .played {
     display: table-cell;
     outline-color: red;
     padding: 5px;
-}
+} */
 
-#playing-table {
+table#playing-table {
     table-layout: relative;
     width: 750px;
     height: 100px;
     border: 15px solid rgb(119, 44, 44);
     border-radius: 15px;
-    background-color: green;
+    background-color: darkgreen;
     text-align: center;
 }
 
 td {
     height: 100px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: green;
+    color: darkgreen;
 
+}
+
+td#status {
+    color: white;
+}
+
+div.score, div#button-panel {
+    text-align: center;
+}
+
+button.op-button {
+    font-size: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 50px;
+}
+
+div.score p {
+    text-align: center;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
 

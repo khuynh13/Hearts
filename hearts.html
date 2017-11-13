@@ -14,14 +14,18 @@
     </head>
     <body>
         <div id="top_pane" class="pane">
-            <p>north player here</p>
             <div id="North-hand" class="cards_pane">
+                <div class="score" id="north-label">
+                    <!-- <p id="north-score">North Player</p>                     -->
+                </div>
                 <!-- <p>insert cards here</p> -->
             </div>
         </div>
         <div id="mid_pane" class="pane">
             <div id="West-hand" class="flex-item">
-                <p>player west here</p>
+                <div class="score" id="west-label">
+                    <!-- <p id="west-score">West Player</p> -->
+                </div>
             </div>
             <div id="table" class="flex-item">
                 <table id="playing-table">
@@ -36,7 +40,7 @@
                         <td>West Plays
                             <div id="West"></div>
                         </td>
-                        <td></td>
+                        <td id="status"></td>
                         <td>East Plays
                             <div id="East"></div>
                         </td>
@@ -52,20 +56,26 @@
 
             </div>
             <div id="East-hand" class="flex-item">
-                <p>east player here</p>
+                <div class="score" id="east-label">
+                    <!-- <p id="east-score">East Player</p>       -->
+                </div>
             </div>
         </div>
         <div id="bottom_pane" class="pane">
-            <p>south player here</p>
+            <!-- <div class="score" id="south-score">
+                <p>south player here</p>
+            </div> -->
             <div id="player" class="pane">
- 
+                <div class="score" id="south-label">
+                    <!-- <p>south player here</p> -->
+                </div>
             </div>
         </div>
         <div id="button-panel">
-            <button type="button" id="play-game">Start Game!</button>
-            <button type="button" id="show-dealt">Show My Cards!</button>
-            <button type="button" id="pass">Pass Cards</button>
-            <button type="button" id="play-card">Play Card</button>
+            <!-- <button type="button" id="play-game">Start Game!</button> -->
+            <!-- <button type="button" id="show-dealt">Show My Cards!</button> -->
+            <button type="button" class="op-button" id="pass">PASS CARDS</button>
+            <button type="button" class="op-button" id="play-card">PLAY CARD</button>
         </div>
     </body>
 
